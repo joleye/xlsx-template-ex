@@ -28,8 +28,7 @@ Where:
 * `{{propertyName|datetime}}` - the value formatted as date and time (DD.MM.YYYY hh:mm:ss) 
 * `{{fileName|image}}` - find a picture file by file name. 
     If the picture found, then it embed into a table cell
-* `{{fileName|image2}}` - find a picture file by file name. 
-    If the picture found, then it embed into a table cell {path:xxx,width:xxx,height:xxx}
+* `{{fileName|image2}}` - like to image, but may use image parameters ,eg: {path:xxx,width:xxx,height:xxx} set image properties
 * `{{propertyArrayName|find:propertyName:propertyValue}}` - find a value in the array `propertyArrayName` 
     that has the property `propertyName` that equal `propertyValue`
 * `{{propertyObjectName|get:propertyName}}` - return a value of the property `propertyArrayName` from the object `propertyObjectName`     
