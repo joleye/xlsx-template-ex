@@ -228,10 +228,10 @@ export class TemplateEngine {
     let fileName;
     if(typeof file == 'string'){
       fileName = file;
-    }else{
+    }else if (file){
       fileName = file.path;
     }
-    if (fs.existsSync(fileName)) {
+    if (fileName && fs.existsSync(fileName)) {
       this.wsh.addImage2(fileName, cell, file);
       return ``;
     }

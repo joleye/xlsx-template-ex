@@ -52,19 +52,43 @@ export class WorkSheetHelper {
           if (typeof file == 'object' && file.width && file.height) {
             let height = Math.round(parseInt(cell['_row'].height) / 0.74);
             let width = Math.round(parseInt(cell['_column'].width) / 0.125);
+            let left = (width - file.width) / 2;
+            let top = (height - file.height) / 2;
+            if(top > 0 && left > 0) {//完全包含
+              range = {
+                tl: {
+                  nativeCol: parseInt(cell.col) - 1,
+                  nativeColOff: left * 10000,
+                  nativeRow: parseInt(cell.row) - 1,
+                  nativeRowOff: top * 10000,
+                },
+                ext: {width: file.width, height: file.height}
+              };
+            }else{//完全大于
+              let file_rate = file.width / file.height;
+              let rate = width / height;
 
-            let left = (width - file.width) /2;
-            let top = (height - file.height)/2;
+              let r_width,r_height;
+              if(file_rate > rate){//宽为准
+                r_width = width * 0.9;
+                r_height = r_width * file.height / file.width;
+              }else{//高为准
+                r_height = height * 0.9;
+                r_width = r_height * file.width / file.height;
+              }
 
-            range = {
-              tl: {
-                nativeCol: parseInt(cell.col) - 1,
-                nativeColOff: left*10000,
-                nativeRow: parseInt(cell.row) - 1,
-                nativeRowOff: top*10000,
-              },
-              ext:{width:file.width, height:file.height}
-            };
+              let left = (width - r_width) / 2;
+              let top = (height - r_height) / 2;
+              range = {
+                tl: {
+                  nativeCol: parseInt(cell.col) - 1,
+                  nativeColOff: Math.round(left * 10000),
+                  nativeRow: parseInt(cell.row) - 1,
+                  nativeRowOff: Math.round(top * 10000),
+                },
+                ext: {width: r_width, height: r_height}
+              };
+            }
           }
           else {
             range = {
@@ -211,10 +235,14 @@ export class WorkSheetHelper {
     // Move an image
     this.worksheet.getImages().forEach(image => {
       const rng = image.range;
-      if (rng.tl.row <= +cellSrc.row && rng.br.row >= +cellSrc.row &&
-        rng.tl.col <= +cellSrc.col && rng.br.col >= +cellSrc.col) {
-        rng.tl.row += +cellDest.row - +cellSrc.row;
-        rng.br.row += +cellDest.row - +cellSrc.row;
+      if(rng.tl && rng.br) {
+        if (rng.tl.row <= +cellSrc.row && rng.br.row >= +cellSrc.row &&
+            rng.tl.col <= +cellSrc.col && rng.br.col >= +cellSrc.col) {
+          rng.tl.row += +cellDest.row - +cellSrc.row;
+          rng.br.row += +cellDest.row - +cellSrc.row;
+        }
+      }else{
+        console.error('rng ERROR ', rng);
       }
     });
 
