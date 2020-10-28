@@ -52,19 +52,19 @@ export class WorkSheetHelper {
           if (typeof file == 'object' && file.width && file.height) {
             let height = Math.round(parseInt(cell['_row'].height) / 0.74);
             let width = Math.round(parseInt(cell['_column'].width) / 0.125);
-            let left = (width - file.width) / 2;
-            let top = (height - file.height) / 2;
-            if(top > 0 && left > 0) {//完全包含
-              range = {
-                tl: {
-                  nativeCol: parseInt(cell.col) - 1,
-                  nativeColOff: left * 10000,
-                  nativeRow: parseInt(cell.row) - 1,
-                  nativeRowOff: top * 10000,
-                },
-                ext: {width: file.width, height: file.height}
-              };
-            }else{//完全大于
+            // let left = (width - file.width) / 2;
+            // let top = (height - file.height) / 2;
+            // if(top > 0 && left > 0) {//完全包含
+            //   range = {
+            //     tl: {
+            //       nativeCol: parseInt(cell.col) - 1,
+            //       nativeColOff: left * 10000,
+            //       nativeRow: parseInt(cell.row) - 1,
+            //       nativeRowOff: top * 10000,
+            //     },
+            //     ext: {width: file.width, height: file.height}
+            //   };
+            // }else{//完全大于
               let file_rate = file.width / file.height;
               let rate = width / height;
 
@@ -88,7 +88,7 @@ export class WorkSheetHelper {
                 },
                 ext: {width: r_width, height: r_height}
               };
-            }
+            // }
           }
           else {
             range = {
