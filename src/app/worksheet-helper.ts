@@ -242,7 +242,7 @@ export class WorkSheetHelper {
           rng.br.row += +cellDest.row - +cellSrc.row;
         }
       }else{
-        console.error('rng ERROR ', rng);
+        //console.error('rng ERROR ', rng);
       }
     });
 
